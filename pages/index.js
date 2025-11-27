@@ -33,7 +33,7 @@ export default function Home() {
           variable={'land'}
         />
         
-        {/* EXACTEMENT comme leur code qui fonctionne */}
+        {/* EXACTEMENT  */}
         <Raster
           colormap={colormap}
           clim={clim}
