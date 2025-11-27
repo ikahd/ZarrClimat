@@ -1,26 +1,24 @@
 import React, { useState } from 'react'
 import { Map, Raster, Line } from '@carbonplan/maps'
 import { useColormap } from '@carbonplan/colormaps'
-// Note: Le ThemeProvider est déjà dans _app.js, pas besoin de le remettre ici, 
-// mais on peut le laisser pour être sûr que ce composant est autonome.
+
 
 const MapComponent = () => {
-  // 1. SOURCE S3 DE L'AUTRE GROUPE
+ 
   const ZARR_SOURCE = "https://webmap-storage.s3.us-east-1.amazonaws.com/maroc_climate/maroc_climate"
   
-  // 2. NOMS DES VARIABLES (Doivent matcher leur fichier Zarr)
-  // D'après leur code, ils utilisent : 'tavg' (Temp), 'prec' (Pluie), 'windsp' (Vent)
+
   const [variable, setVariable] = useState('tavg') 
   
   const colormapName = variable === 'tavg' ? 'warm' : 'cool'
   const colormap = useColormap(colormapName)
 
-  // 3. ÉCHELLES ADAPTÉES
+
   const getClim = () => {
     switch(variable) {
-      case 'tavg': return [270, 315]   // Kelvin (ou [0, 40] si c'est °C, à tester)
-      case 'prec': return [0, 30]      // Précipitations
-      case 'windsp': return [0, 10]    // Vitesse vent
+      case 'tavg': return [270, 315]   
+      case 'prec': return [0, 30]      
+      case 'windsp': return [0, 10]    
       default: return [0, 1]
     }
   }
@@ -34,10 +32,10 @@ const MapComponent = () => {
         />
         
         <Raster
-          key={variable} // Force le rafraîchissement
+          key={variable} 
           source={ZARR_SOURCE}
           variable={'climate'} 
-          selector={{ band: variable }} // 'tavg', 'prec', ou 'windsp'
+          selector={{ band: variable }} 
           colormap={colormap}
           clim={getClim()}
           opacity={1}
